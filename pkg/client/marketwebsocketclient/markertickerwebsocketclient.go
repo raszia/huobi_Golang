@@ -9,7 +9,7 @@ import (
 	"github.com/raszia/huobi_Golang/pkg/model/market"
 )
 
-// Responsible to handle last 24h candlestick data from WebSocket
+// Responsible to handle last 24h marketTicker data from WebSocket
 type MarketTickerWebSocketClient struct {
 	websocketclientbase.WebSocketClientBase
 }
@@ -27,7 +27,7 @@ func (p *MarketTickerWebSocketClient) SetHandler(
 	p.WebSocketClientBase.SetHandler(connectedHandler, p.handleMessage, responseHandler)
 }
 
-// Request full candlestick data
+// Request full marketTicker data
 func (p *MarketTickerWebSocketClient) Request(symbol string, clientId string) {
 	topic := fmt.Sprintf("market.%s.ticker", symbol)
 	req := fmt.Sprintf("{\"req\": \"%s\",\"id\": \"%s\" }", topic, clientId)
