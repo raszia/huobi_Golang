@@ -113,7 +113,7 @@ func (p *WebSocketClientBase) connectWebSocket() {
 	// applogger.Debug("WebSocket connecting...")
 	p.conn, _, err = websocket.DefaultDialer.Dial(url, nil)
 	if err != nil {
-		applogger.Error("WebSocket connected error: %s", err)
+		// applogger.Error("WebSocket connected error: %s", err)
 		return
 	}
 	// applogger.Info("WebSocket connected")
@@ -138,7 +138,7 @@ func (p *WebSocketClientBase) disconnectWebSocket() {
 	// applogger.Debug("WebSocket disconnecting...")
 	err := p.conn.Close()
 	if err != nil {
-		applogger.Error("WebSocket disconnect error: %s", err)
+		// applogger.Error("WebSocket disconnect error: %s", err)
 		return
 	}
 
@@ -197,12 +197,12 @@ func (p *WebSocketClientBase) stopReadLoop() {
 // defines a for loop to read data from server
 // it will stop once it receives the signal from stopReadChannel
 func (p *WebSocketClientBase) readLoop() {
-	applogger.Debug("readLoop started")
+	// applogger.Debug("readLoop started")
 	for {
 		select {
 		// Receive data from stopChannel
 		case <-p.stopReadChannel:
-			applogger.Debug("readLoop stopped")
+			// applogger.Debug("readLoop stopped")
 			return
 
 		default:
