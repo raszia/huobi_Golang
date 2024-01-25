@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/raszia/huobi_Golang/logging/applogger"
 	"github.com/raszia/huobi_Golang/pkg/client/websocketclientbase"
 	"github.com/raszia/huobi_Golang/pkg/model/market"
 )
@@ -34,7 +33,7 @@ func (p *MarketTickerWebSocketClient) Request(symbol string, clientId string) {
 
 	p.Send(req)
 
-	applogger.Info("WebSocket requested, topic=%s, clientId=%s", topic, clientId)
+	// applogger.Info("WebSocket requested, topic=%s, clientId=%s", topic, clientId)
 }
 
 // Subscribe latest 24h market stats
@@ -44,17 +43,17 @@ func (p *MarketTickerWebSocketClient) Subscribe(symbol string, clientId string) 
 
 	p.Send(sub)
 
-	applogger.Info("WebSocket subscribed, topic=%s, clientId=%s", topic, clientId)
+	// applogger.Info("WebSocket subscribed, topic=%s, clientId=%s", topic, clientId)
 }
 
 // Unsubscribe latest 24 market stats
 func (p *MarketTickerWebSocketClient) UnSubscribe(symbol string, clientId string) {
-	topic := fmt.Sprintf("market.%s.ticker", symbol)
+	// topic := fmt.Sprintf("market.%s.ticker", symbol)
 	unsub := fmt.Sprintf("{\"unsub\": \"%s\",\"id\": \"%s\" }", symbol, clientId)
 
 	p.Send(unsub)
 
-	applogger.Info("WebSocket unsubscribed, topic=%s, clientId=%s", topic, clientId)
+	// applogger.Info("WebSocket unsubscribed, topic=%s, clientId=%s", topic, clientId)
 }
 
 func (p *MarketTickerWebSocketClient) handleMessage(msg string) (interface{}, error) {

@@ -87,7 +87,7 @@ func (p *WebSocketClientBase) Connect(autoConnect bool) {
 // Send data to websocket server
 func (p *WebSocketClientBase) Send(data string) {
 	if p.conn == nil {
-		applogger.Error("WebSocket sent error: no connection available")
+		// applogger.Error("WebSocket sent error: no connection available")
 		return
 	}
 
@@ -110,13 +110,13 @@ func (p *WebSocketClientBase) Close() {
 func (p *WebSocketClientBase) connectWebSocket() {
 	var err error
 	url := fmt.Sprintf("wss://%s%s", p.host, p.path)
-	applogger.Debug("WebSocket connecting...")
+	// applogger.Debug("WebSocket connecting...")
 	p.conn, _, err = websocket.DefaultDialer.Dial(url, nil)
 	if err != nil {
 		applogger.Error("WebSocket connected error: %s", err)
 		return
 	}
-	applogger.Info("WebSocket connected")
+	// applogger.Info("WebSocket connected")
 
 	// start loop to read and handle message
 	p.startReadLoop()
@@ -135,14 +135,14 @@ func (p *WebSocketClientBase) disconnectWebSocket() {
 	// start a new goroutine to send stop signal
 	go p.stopReadLoop()
 
-	applogger.Debug("WebSocket disconnecting...")
+	// applogger.Debug("WebSocket disconnecting...")
 	err := p.conn.Close()
 	if err != nil {
 		applogger.Error("WebSocket disconnect error: %s", err)
 		return
 	}
 
-	applogger.Info("WebSocket disconnected")
+	// applogger.Info("WebSocket disconnected")
 }
 
 // initialize a ticker and start a goroutine tickerLoop()
@@ -162,21 +162,21 @@ func (p *WebSocketClientBase) stopTicker() {
 // It checks the last data that received from server, if it is longer than the threshold,
 // it will force disconnect server and connect again.
 func (p *WebSocketClientBase) tickerLoop() {
-	applogger.Debug("tickerLoop started")
+	// applogger.Debug("tickerLoop started")
 	for {
 		select {
 		// Receive data from stopChannel
 		case <-p.stopTickerChannel:
-			applogger.Debug("tickerLoop stopped")
+			// applogger.Debug("tickerLoop stopped")
 			return
 
 		// Receive tick from tickChannel
 		case <-p.ticker.C:
-			elapsedSecond := time.Now().Sub(p.lastReceivedTime).Seconds()
-			applogger.Debug("WebSocket received data %f sec ago", elapsedSecond)
+			elapsedSecond := time.Since(p.lastReceivedTime).Seconds()
+			// applogger.Debug("WebSocket received data %f sec ago", elapsedSecond)
 
 			if elapsedSecond > ReconnectWaitSecond {
-				applogger.Info("WebSocket reconnect...")
+				// applogger.Info("WebSocket reconnect...")
 				p.disconnectWebSocket()
 				p.connectWebSocket()
 			}
@@ -207,14 +207,14 @@ func (p *WebSocketClientBase) readLoop() {
 
 		default:
 			if p.conn == nil {
-				applogger.Error("Read error: no connection available")
+				// applogger.Error("Read error: no connection available")
 				time.Sleep(TimerIntervalSecond * time.Second)
 				continue
 			}
 
 			msgType, buf, err := p.conn.ReadMessage()
 			if err != nil {
-				applogger.Error("Read error: %s", err)
+				// applogger.Error("Read error: %s", err)
 				time.Sleep(TimerIntervalSecond * time.Second)
 				continue
 			}
@@ -225,7 +225,7 @@ func (p *WebSocketClientBase) readLoop() {
 			if msgType == websocket.BinaryMessage {
 				message, err := gzip.GZipDecompress(buf)
 				if err != nil {
-					applogger.Error("UnGZip data error: %s", err)
+					// applogger.Error("UnGZip data error: %s", err)
 					return
 				}
 
@@ -234,15 +234,15 @@ func (p *WebSocketClientBase) readLoop() {
 
 				// If it is Ping then respond Pong
 				if pingMsg != nil && pingMsg.Ping != 0 {
-					applogger.Debug("Received Ping: %d", pingMsg.Ping)
+					// applogger.Debug("Received Ping: %d", pingMsg.Ping)
 					pongMsg := fmt.Sprintf("{\"pong\": %d}", pingMsg.Ping)
 					p.Send(pongMsg)
-					applogger.Debug("Replied Pong: %d", pingMsg.Ping)
+					// applogger.Debug("Replied Pong: %d", pingMsg.Ping)
 				} else if strings.Contains(message, "tick") || strings.Contains(message, "data") {
 					// If it contains expected string, then invoke message handler and response handler
 					result, err := p.messageHandler(message)
 					if err != nil {
-						applogger.Error("Handle message error: %s", err)
+						// applogger.Error("Handle message error: %s", err)
 						continue
 					}
 					if p.responseHandler != nil {
