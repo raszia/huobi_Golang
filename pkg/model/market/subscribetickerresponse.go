@@ -19,9 +19,9 @@ type MarkerTick struct {
 	High      decimal.Decimal `json:"high"`
 	Vol       decimal.Decimal `json:"vol"`
 	Bid       decimal.Decimal `json:"bid"`
-	BidSize   decimal.Decimal `json:"bid_size"`
+	BidSize   decimal.Decimal `json:"bidSize"`
 	Ask       decimal.Decimal `json:"ask"`
-	AskSize   decimal.Decimal `json:"ask_size"`
-	LastPrice decimal.Decimal `json:"last_price"`
-	LastSize  decimal.Decimal `json:"last_size"`
+	AskSize   decimal.Decimal `json:"askSize"`
+	LastPrice decimal.Decimal `json:"lastPrice"`
+	LastSize  decimal.Decimal `json:"lastSize"`
 }

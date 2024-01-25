@@ -19,7 +19,8 @@ import (
 )
 
 func main() {
-	runAll()
+	marketwebsocketclientexample.RunTicker()
+	// runAll()
 }
 
 // Run all examples

@@ -39,7 +39,7 @@ func (p *MarketTickerWebSocketClient) Request(symbol string, clientId string) {
 
 // Subscribe latest 24h market stats
 func (p *MarketTickerWebSocketClient) Subscribe(symbol string, clientId string) {
-	topic := fmt.Sprintf("market.%s.detail", symbol)
+	topic := fmt.Sprintf("market.%s.ticker", symbol)
 	sub := fmt.Sprintf("{\"sub\": \"%s\",\"id\": \"%s\" }", topic, clientId)
 
 	p.Send(sub)
@@ -49,7 +49,7 @@ func (p *MarketTickerWebSocketClient) Subscribe(symbol string, clientId string) 
 
 // Unsubscribe latest 24 market stats
 func (p *MarketTickerWebSocketClient) UnSubscribe(symbol string, clientId string) {
-	topic := fmt.Sprintf("market.%s.detail", symbol)
+	topic := fmt.Sprintf("market.%s.ticker", symbol)
 	unsub := fmt.Sprintf("{\"unsub\": \"%s\",\"id\": \"%s\" }", symbol, clientId)
 
 	p.Send(unsub)

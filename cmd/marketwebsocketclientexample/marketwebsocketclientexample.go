@@ -1,6 +1,7 @@
 package marketwebsocketclientexample
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/raszia/huobi_Golang/config"
@@ -10,6 +11,7 @@ import (
 )
 
 func RunAllExamples() {
+
 	reqAndSubscribeCandlestick()
 	reqAndSubscribeDepth()
 	reqAndSubscribe150LevelMarketByPrice()
@@ -19,7 +21,9 @@ func RunAllExamples() {
 	reqAndSubscribeTrade()
 	reqAndSubscribeLast24hCandlestick()
 }
-
+func RunTicker() {
+	reqAndSubscribeTicker()
+}
 func reqAndSubscribeCandlestick() {
 
 	client := new(marketwebsocketclient.CandlestickWebSocketClient).Init(config.Host)
@@ -405,19 +409,19 @@ func reqAndSubscribeLast24hCandlestick() {
 		func(resp interface{}) {
 			candlestickResponse, ok := resp.(market.SubscribeLast24hCandlestickResponse)
 			if ok {
-				if &candlestickResponse != nil {
-					if candlestickResponse.Tick != nil {
-						t := candlestickResponse.Tick
-						applogger.Info("WebSocket received candlestick update, id: %d, count: %v, volume: %v [%v-%v-%v-%v]",
-							t.Id, t.Count, t.Vol, t.Open, t.Close, t.Low, t.High)
-					}
 
-					if candlestickResponse.Data != nil {
-						t := candlestickResponse.Data
-						applogger.Info("WebSocket received candlestick data, id: %d, count: %v, volume: %v [%v-%v-%v-%v]",
-							t.Id, t.Count, t.Vol, t.Open, t.Close, t.Low, t.High)
-					}
+				if candlestickResponse.Tick != nil {
+					t := candlestickResponse.Tick
+					applogger.Info("WebSocket received candlestick update, id: %d, count: %v, volume: %v [%v-%v-%v-%v]",
+						t.Id, t.Count, t.Vol, t.Open, t.Close, t.Low, t.High)
 				}
+
+				if candlestickResponse.Data != nil {
+					t := candlestickResponse.Data
+					applogger.Info("WebSocket received candlestick data, id: %d, count: %v, volume: %v [%v-%v-%v-%v]",
+						t.Id, t.Count, t.Vol, t.Open, t.Close, t.Low, t.High)
+				}
+
 			} else {
 				applogger.Warn("Unknown response: %v", resp)
 			}
@@ -430,6 +434,49 @@ func reqAndSubscribeLast24hCandlestick() {
 	fmt.Scanln()
 
 	client.UnSubscribe("btcusdt", "1608")
+
+	client.Close()
+	applogger.Info("Client closed")
+}
+
+func reqAndSubscribeTicker() {
+	// Initialize a new instance
+	client := new(marketwebsocketclient.MarketTickerWebSocketClient).Init(config.Host)
+
+	// Set the callback handlers
+	client.SetHandler(
+		// Connected handler
+		func() {
+			client.Request("btcusdt", "16081608")
+
+			client.Subscribe("btcusdt", "16081608")
+		},
+		// Response handler
+		func(resp interface{}) {
+			tickerRes, ok := resp.(market.SubscribeMarketTickerResponse)
+			if ok {
+
+				if tickerRes.Tick != nil {
+					t := tickerRes.Tick
+					b, _ := json.Marshal(t)
+					fmt.Println(string(b))
+					//applogger.Info("WebSocket received candlestick update, id: %d, count: %v, volume: %v [%v-%v-%v-%v]",
+					//	t.Id, t.Count, t.Vol, t.Open, t.Close, t.Low, t.High)
+					// applogger.Info("ticker res: %v", t)
+
+				}
+			} else {
+				applogger.Warn("Unknown response: %v", resp)
+			}
+		})
+
+	// Connect to the server and wait for the handler to handle the response
+	client.Connect(true)
+
+	fmt.Println("Press ENTER to unsubscribe and stop...")
+	fmt.Scanln()
+
+	client.UnSubscribe("ethusdt", "16081608")
 
 	client.Close()
 	applogger.Info("Client closed")
