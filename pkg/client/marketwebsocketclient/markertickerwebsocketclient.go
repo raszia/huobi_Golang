@@ -9,27 +9,27 @@ import (
 	"github.com/raszia/huobi_Golang/pkg/model/market"
 )
 
-// Responsible to handle Trade data from WebSocket
-type TradeWebSocketClient struct {
+// Responsible to handle last 24h candlestick data from WebSocket
+type MarketTickerWebSocketClient struct {
 	websocketclientbase.WebSocketClientBase
 }
 
 // Initializer
-func (p *TradeWebSocketClient) Init(host string) *TradeWebSocketClient {
+func (p *MarketTickerWebSocketClient) Init(host string) *MarketTickerWebSocketClient {
 	p.WebSocketClientBase.Init(host)
 	return p
 }
 
 // Set callback handler
-func (p *TradeWebSocketClient) SetHandler(
+func (p *MarketTickerWebSocketClient) SetHandler(
 	connectedHandler websocketclientbase.ConnectedHandler,
 	responseHandler websocketclientbase.ResponseHandler) {
 	p.WebSocketClientBase.SetHandler(connectedHandler, p.handleMessage, responseHandler)
 }
 
-// Request latest 300 trade data
-func (p *TradeWebSocketClient) Request(symbol string, clientId string) {
-	topic := fmt.Sprintf("market.%s.trade.detail", symbol)
+// Request full candlestick data
+func (p *MarketTickerWebSocketClient) Request(symbol string, clientId string) {
+	topic := fmt.Sprintf("market.%s.ticker", symbol)
 	req := fmt.Sprintf("{\"req\": \"%s\",\"id\": \"%s\" }", topic, clientId)
 
 	p.Send(req)
@@ -37,9 +37,9 @@ func (p *TradeWebSocketClient) Request(symbol string, clientId string) {
 	applogger.Info("WebSocket requested, topic=%s, clientId=%s", topic, clientId)
 }
 
-// Subscribe latest completed trade in tick by tick mode
-func (p *TradeWebSocketClient) Subscribe(symbol string, clientId string) {
-	topic := fmt.Sprintf("market.%s.trade.detail", symbol)
+// Subscribe latest 24h market stats
+func (p *MarketTickerWebSocketClient) Subscribe(symbol string, clientId string) {
+	topic := fmt.Sprintf("market.%s.detail", symbol)
 	sub := fmt.Sprintf("{\"sub\": \"%s\",\"id\": \"%s\" }", topic, clientId)
 
 	p.Send(sub)
@@ -47,18 +47,18 @@ func (p *TradeWebSocketClient) Subscribe(symbol string, clientId string) {
 	applogger.Info("WebSocket subscribed, topic=%s, clientId=%s", topic, clientId)
 }
 
-// Unsubscribe trade
-func (p *TradeWebSocketClient) UnSubscribe(symbol string, clientId string) {
-	topic := fmt.Sprintf("market.%s.trade.detail", symbol)
-	unsub := fmt.Sprintf("{\"unsub\": \"%s\",\"id\": \"%s\" }", topic, clientId)
+// Unsubscribe latest 24 market stats
+func (p *MarketTickerWebSocketClient) UnSubscribe(symbol string, clientId string) {
+	topic := fmt.Sprintf("market.%s.detail", symbol)
+	unsub := fmt.Sprintf("{\"unsub\": \"%s\",\"id\": \"%s\" }", symbol, clientId)
 
 	p.Send(unsub)
 
 	applogger.Info("WebSocket unsubscribed, topic=%s, clientId=%s", topic, clientId)
 }
 
-func (p *TradeWebSocketClient) handleMessage(msg string) (interface{}, error) {
-	result := market.SubscribeTradeResponse{}
+func (p *MarketTickerWebSocketClient) handleMessage(msg string) (interface{}, error) {
+	result := market.SubscribeMarketTickerResponse{}
 	err := json.Unmarshal([]byte(msg), &result)
 	return result, err
 }

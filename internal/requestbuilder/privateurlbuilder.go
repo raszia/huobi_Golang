@@ -2,9 +2,10 @@ package requestbuilder
 
 import (
 	"fmt"
-	"github.com/huobirdcenter/huobi_golang/pkg/model"
 	"net/url"
 	"time"
+
+	"github.com/raszia/huobi_Golang/pkg/model"
 )
 
 type PrivateUrlBuilder struct {

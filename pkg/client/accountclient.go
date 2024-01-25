@@ -3,11 +3,12 @@ package client
 import (
 	"encoding/json"
 	"errors"
-	"github.com/huobirdcenter/huobi_golang/internal"
-	"github.com/huobirdcenter/huobi_golang/internal/requestbuilder"
-	"github.com/huobirdcenter/huobi_golang/pkg/model"
-	"github.com/huobirdcenter/huobi_golang/pkg/model/account"
 	"strconv"
+
+	"github.com/raszia/huobi_Golang/internal"
+	"github.com/raszia/huobi_Golang/internal/requestbuilder"
+	"github.com/raszia/huobi_Golang/pkg/model"
+	"github.com/raszia/huobi_Golang/pkg/model/account"
 )
 
 // Responsible to operate account
@@ -220,7 +221,6 @@ func (p *AccountClient) FuturesTransfer(request account.FuturesTransferRequest) 
 	}
 	return result.Data, nil
 }
-
 
 // Returns the point balance of specified user's account
 func (p *AccountClient) GetPointBalance(subUid string) (*account.GetPointBalanceResponse, error) {

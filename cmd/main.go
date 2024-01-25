@@ -1,21 +1,21 @@
 package main
 
 import (
-	"github.com/huobirdcenter/huobi_golang/cmd/accountclientexample"
-	"github.com/huobirdcenter/huobi_golang/cmd/accountwebsocketclientexample"
-	"github.com/huobirdcenter/huobi_golang/cmd/algoorderclientexample"
-	"github.com/huobirdcenter/huobi_golang/cmd/commonclientexample"
-	"github.com/huobirdcenter/huobi_golang/cmd/crossmarginclientexample"
-	"github.com/huobirdcenter/huobi_golang/cmd/etfclientexample"
-	"github.com/huobirdcenter/huobi_golang/cmd/isolatedmarginclientexample"
-	"github.com/huobirdcenter/huobi_golang/cmd/marketclientexample"
-	"github.com/huobirdcenter/huobi_golang/cmd/marketwebsocketclientexample"
-	"github.com/huobirdcenter/huobi_golang/cmd/orderclientexample"
-	"github.com/huobirdcenter/huobi_golang/cmd/orderwebsocketclientexample"
-	"github.com/huobirdcenter/huobi_golang/cmd/stablecoinclientexample"
-	"github.com/huobirdcenter/huobi_golang/cmd/subuserclientexample"
-	"github.com/huobirdcenter/huobi_golang/cmd/walletclientexample"
-	"github.com/huobirdcenter/huobi_golang/logging/perflogger"
+	"github.com/raszia/huobi_Golang/cmd/accountclientexample"
+	"github.com/raszia/huobi_Golang/cmd/accountwebsocketclientexample"
+	"github.com/raszia/huobi_Golang/cmd/algoorderclientexample"
+	"github.com/raszia/huobi_Golang/cmd/commonclientexample"
+	"github.com/raszia/huobi_Golang/cmd/crossmarginclientexample"
+	"github.com/raszia/huobi_Golang/cmd/etfclientexample"
+	"github.com/raszia/huobi_Golang/cmd/isolatedmarginclientexample"
+	"github.com/raszia/huobi_Golang/cmd/marketclientexample"
+	"github.com/raszia/huobi_Golang/cmd/marketwebsocketclientexample"
+	"github.com/raszia/huobi_Golang/cmd/orderclientexample"
+	"github.com/raszia/huobi_Golang/cmd/orderwebsocketclientexample"
+	"github.com/raszia/huobi_Golang/cmd/stablecoinclientexample"
+	"github.com/raszia/huobi_Golang/cmd/subuserclientexample"
+	"github.com/raszia/huobi_Golang/cmd/walletclientexample"
+	"github.com/raszia/huobi_Golang/logging/perflogger"
 )
 
 func main() {

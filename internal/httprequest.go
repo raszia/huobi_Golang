@@ -1,10 +1,11 @@
 package internal
 
 import (
-	"github.com/huobirdcenter/huobi_golang/logging/perflogger"
 	"io/ioutil"
 	"net/http"
 	"strings"
+
+	"github.com/raszia/huobi_Golang/logging/perflogger"
 )
 
 func HttpGet(url string) (string, error) {

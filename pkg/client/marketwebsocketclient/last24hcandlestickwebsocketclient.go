@@ -3,9 +3,10 @@ package marketwebsocketclient
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/huobirdcenter/huobi_golang/logging/applogger"
-	"github.com/huobirdcenter/huobi_golang/pkg/client/websocketclientbase"
-	"github.com/huobirdcenter/huobi_golang/pkg/model/market"
+
+	"github.com/raszia/huobi_Golang/logging/applogger"
+	"github.com/raszia/huobi_Golang/pkg/client/websocketclientbase"
+	"github.com/raszia/huobi_Golang/pkg/model/market"
 )
 
 // Responsible to handle last 24h candlestick data from WebSocket

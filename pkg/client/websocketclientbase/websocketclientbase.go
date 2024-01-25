@@ -2,20 +2,21 @@ package websocketclientbase
 
 import (
 	"fmt"
-	"github.com/gorilla/websocket"
-	"github.com/huobirdcenter/huobi_golang/internal/gzip"
-	"github.com/huobirdcenter/huobi_golang/internal/model"
-	"github.com/huobirdcenter/huobi_golang/logging/applogger"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/gorilla/websocket"
+	"github.com/raszia/huobi_Golang/internal/gzip"
+	"github.com/raszia/huobi_Golang/internal/model"
+	"github.com/raszia/huobi_Golang/logging/applogger"
 )
 
 const (
 	TimerIntervalSecond = 5
 	ReconnectWaitSecond = 60
 
-	wsPath = "/ws"
+	wsPath   = "/ws"
 	feedPath = "/feed"
 )
 

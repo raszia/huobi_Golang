@@ -1,10 +1,10 @@
 package isolatedmarginclientexample
 
 import (
-	"github.com/huobirdcenter/huobi_golang/config"
-	"github.com/huobirdcenter/huobi_golang/logging/applogger"
-	"github.com/huobirdcenter/huobi_golang/pkg/client"
-	"github.com/huobirdcenter/huobi_golang/pkg/model/margin"
+	"github.com/raszia/huobi_Golang/config"
+	"github.com/raszia/huobi_Golang/logging/applogger"
+	"github.com/raszia/huobi_Golang/pkg/client"
+	"github.com/raszia/huobi_Golang/pkg/model/margin"
 )
 
 func RunAllExamples() {
@@ -32,7 +32,7 @@ func transferIn() {
 	}
 }
 
-//  Transfer specific asset from isolated margin account to spot trading account.
+// Transfer specific asset from isolated margin account to spot trading account.
 func transferOut() {
 	request := margin.IsolatedMarginTransferRequest{
 		Currency: "usdt",
@@ -47,7 +47,7 @@ func transferOut() {
 	}
 }
 
-//  Get the loan interest rates and quota applied on the user.
+// Get the loan interest rates and quota applied on the user.
 func getMarginLoanInfo() {
 	optionalRequest := margin.GetMarginLoanInfoOptionalRequest{Symbols: "btcusdt"}
 	client := new(client.IsolatedMarginClient).Init(config.AccessKey, config.SecretKey, config.Host)
@@ -61,7 +61,7 @@ func getMarginLoanInfo() {
 	}
 }
 
-//  Place an order to apply a margin loan.
+// Place an order to apply a margin loan.
 func marginOrders() {
 	client := new(client.IsolatedMarginClient).Init(config.AccessKey, config.SecretKey, config.Host)
 	request := margin.IsolatedMarginOrdersRequest{
@@ -90,7 +90,7 @@ func marginOrdersRepay() {
 	}
 }
 
-//  Get the margin orders based on a specific searching criteria.
+// Get the margin orders based on a specific searching criteria.
 func marginLoanOrders() {
 	client := new(client.IsolatedMarginClient).Init(config.AccessKey, config.SecretKey, config.Host)
 	optionalRequest := margin.IsolatedMarginLoanOrdersOptionalRequest{
@@ -106,7 +106,7 @@ func marginLoanOrders() {
 	}
 }
 
-//  Get the balance of the margin loan account.
+// Get the balance of the margin loan account.
 func marginAccountsBalance() {
 	optionalRequest := margin.MarginAccountsBalanceOptionalRequest{
 		Symbol: "btcusdt"}
